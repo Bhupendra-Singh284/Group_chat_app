@@ -2,6 +2,7 @@ import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/pages/auth/login_page.dart';
 import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/auth_service.dart';
+import 'package:chat_app/shared/constants.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 fontSize: 15, fontWeight: FontWeight.w400)),
                         Image.asset("assets/register.png"),
                         TextFormField(
+                          cursorColor: Constants.customBlack,
                           decoration: textInputDecoration.copyWith(
+                              focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Constants.primaryColor, width: 2)),
                               labelText: "Full Name",
                               prefixIcon: Icon(
                                 Icons.person,
@@ -61,10 +66,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             });
                           },
                           validator: (val) {
-                            if (val!.isNotEmpty) {
-                              return null;
-                            } else {
+                            if (val!.isEmpty) {
                               return "Name cannot be empty";
+                            } else if (val.contains('@')) {
+                              return "Name cannot contain '@'";
+                            } else if (val.length > 20) {
+                              return "Name cannot be bigger than 20 characters";
+                            } else {
+                              return null;
                             }
                           },
                         ),
@@ -72,8 +81,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 15,
                         ),
                         TextFormField(
+                          cursorColor: Constants.customBlack,
                           decoration: textInputDecoration.copyWith(
                               labelText: "Email",
+                              focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Constants.primaryColor, width: 2)),
                               prefixIcon: Icon(
                                 Icons.email,
                                 color: Theme.of(context).primaryColor,
@@ -95,9 +108,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 15),
                         TextFormField(
+                          cursorColor: Constants.customBlack,
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
                               labelText: "Password",
+                              focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Constants.primaryColor, width: 2)),
                               prefixIcon: Icon(
                                 Icons.lock,
                                 color: Theme.of(context).primaryColor,
@@ -122,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).primaryColor,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30))),

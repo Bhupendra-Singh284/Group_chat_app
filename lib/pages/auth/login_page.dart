@@ -3,6 +3,7 @@ import 'package:chat_app/pages/auth/register_page.dart';
 import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/service/database_service.dart';
+import 'package:chat_app/shared/constants.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,8 +52,12 @@ class _LoginPageState extends State<LoginPage> {
                                 fontSize: 15, fontWeight: FontWeight.w400)),
                         Image.asset("assets/login.png"),
                         TextFormField(
+                          cursorColor: Constants.customBlack,
                           decoration: textInputDecoration.copyWith(
                               labelText: "Email",
+                              focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Constants.primaryColor, width: 2)),
                               prefixIcon: Icon(
                                 Icons.email,
                                 color: Theme.of(context).primaryColor,
@@ -74,8 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 15),
                         TextFormField(
+                          cursorColor: Constants.customBlack,
                           obscureText: true,
                           decoration: textInputDecoration.copyWith(
+                              focusedErrorBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Constants.primaryColor, width: 2)),
                               labelText: "Password",
                               prefixIcon: Icon(
                                 Icons.lock,
@@ -101,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).primaryColor,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30))),

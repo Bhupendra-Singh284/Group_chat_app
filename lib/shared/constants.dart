@@ -7,6 +7,7 @@ class Constants {
   static String projectId = "chatappflutter-13318";
   static const double size1 = 15;
   static const primaryColor =
-      Color.fromARGB(255, 240, 114, 88); //const Color(0xFFee7b64);
+      Color.fromARGB(255, 244, 106, 78); //const Color(0xFFee7b64);
   static const secondaryColor = Color.fromARGB(255, 255, 245, 221);
+  static const customBlack = Color.fromARGB(255, 222, 98, 98);
 }

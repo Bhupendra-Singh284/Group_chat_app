@@ -45,6 +45,14 @@ class _GroupInfoState extends State<GroupInfo> {
     return r.substring(r.indexOf("_") + 1);
   }
 
+  bool isAdmin(String r) {
+    final a = r.split('_');
+    if (a.last == "@admin") {
+      return true;
+    }
+    return false;
+  }
+
   String getId(String res) {
     return res.substring(0, res.indexOf("_"));
   }
@@ -118,7 +126,14 @@ class _GroupInfoState extends State<GroupInfo> {
                       );
                     });
               },
-              icon: const Icon(Icons.exit_to_app))
+              icon: const Icon(Icons.exit_to_app)),
+          PopupMenuButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              itemBuilder: (context) => [
+                    const PopupMenuItem(child: Text("Promote users")),
+                    const PopupMenuItem(child: Text("Demote users")),
+                  ])
         ],
       ),
       body: Padding(
@@ -212,54 +227,76 @@ class _GroupInfoState extends State<GroupInfo> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                title: Text(
-                                    getName(snapshot.data['members'][index])),
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(getName(
+                                        snapshot.data['members'][index])),
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.red.shade100,
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        padding: const EdgeInsets.all(4),
+                                        child: const Text(
+                                          "Owner",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 251, 87, 75),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
                                 subtitle: Text(
                                     getId(snapshot.data['members'][index])),
                               ),
                             ],
                           )
-                        : ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Theme.of(context).primaryColor,
-                              child: Text(
-                                getName(snapshot.data['members'][index])
-                                    .substring(0, 1)
-                                    .toUpperCase(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.red.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Text(
-                                        "Owner",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 251, 87, 75),
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
-                                      )),
+                        : isAdmin(snapshot.data['members'][index])
+                            ? ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: Text(
+                                    getName(snapshot.data['members'][index])
+                                        .substring(0, 1)
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                Text(getName(snapshot.data['members'][index])),
-                              ],
-                            ),
-                            subtitle:
-                                Text(getId(snapshot.data['members'][index])),
-                          ),
+                                title: Text(
+                                    getName(snapshot.data['members'][index])),
+                                subtitle: Text(
+                                    getId(snapshot.data['members'][index])),
+                              )
+                            : ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: Text(
+                                    getName(snapshot.data['members'][index])
+                                        .substring(0, 1)
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                title: Text(
+                                    getName(snapshot.data['members'][index])),
+                                subtitle: Text(
+                                    getId(snapshot.data['members'][index])),
+                              ),
                   );
                 },
               );
